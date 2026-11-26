@@ -1,0 +1,348 @@
+/* variables de colores pa no estar repitiendo codigos hexadecimales por todo lado */
+:root {
+  --fondo-pagina: #0b1116;
+  --fondo-tarjeta: #131d24;
+  --fondo-elevado: #1b2832;
+  --color-primario: #10b981;
+  --color-secundario: #06b6d4;
+  --texto-principal: #f1f5f9;
+  --texto-suave: #94a3b8;
+  --borde-sutil: rgba(255, 255, 255, 0.08);
+  --degradado-historia: linear-gradient(135deg, #10b981, #06b6d4, #3b82f6);
+}
+
+/* reseteo basico pa q los margenes no jodan en ningun navegador */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--fondo-pagina);
+  color: var(--texto-principal);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px 12px;
+}
+
+/* contenedor tipo app movil pero q se adapta bien en pc */
+.contenedor-aplicacion {
+  width: 100%;
+  max-width: 540px;
+  background-color: var(--fondo-tarjeta);
+  border: 1px solid var(--borde-sutil);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* parte de arriba con el titulo y el checkbox de modo demo */
+.encabezado-superior {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--borde-sutil);
+}
+
+.titulo-grupo h1 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.titulo-grupo h1 span {
+  color: var(--color-primario);
+}
+
+.subtitulo-estado {
+  font-size: 0.82rem;
+  color: var(--texto-suave);
+  margin-top: 2px;
+}
+
+.control-prueba {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--fondo-elevado);
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  color: var(--texto-suave);
+  border: 1px solid var(--borde-sutil);
+}
+
+.control-prueba input {
+  accent-color: var(--color-primario);
+  cursor: pointer;
+}
+
+/* barra horizontal donde van todas las bolitas */
+.barra-historias {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 4px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--fondo-elevado) transparent;
+}
+
+.lista-historias-activas {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* cada bolita individual con su texto abajo */
+.item-historia {
+  background: none;
+  border: none;
+  color: var(--texto-principal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.item-historia:hover {
+  transform: translateY(-2px);
+}
+
+/* el aro de color alrededor de la miniatura */
+.aro-historia {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  padding: 3px;
+  background: var(--degradado-historia);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* estilo diferente pal boton de subir (+) */
+.aro-nuevo {
+  background: var(--fondo-elevado);
+  border: 2px dashed var(--color-primario);
+}
+
+.icono-mas {
+  font-size: 1.8rem;
+  color: var(--color-primario);
+  line-height: 1;
+}
+
+.miniatura-historia {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--fondo-tarjeta);
+}
+
+.etiqueta-historia {
+  font-size: 0.75rem;
+  color: var(--texto-suave);
+  max-width: 72px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* tarjeta informativa de abajo */
+.panel-informativo {
+  margin-top: 8px;
+}
+
+.tarjeta-guia {
+  background-color: var(--fondo-elevado);
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid var(--borde-sutil);
+}
+
+.tarjeta-guia h2 {
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  color: var(--color-secundario);
+}
+
+.tarjeta-guia ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: var(--texto-suave);
+  line-height: 1.4;
+}
+
+.tarjeta-guia li::before {
+  content: "▸ ";
+  color: var(--color-primario);
+}
+
+/* modal pantalla completa pa ver las historias */
+.visor-historia {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(5, 9, 12, 0.94);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 12px;
+}
+
+.visor-historia.oculto {
+  display: none;
+}
+
+/* marco con proporcion vertical tipo historia de celular */
+.marco-visor {
+  position: relative;
+  width: 100%;
+  max-width: 410px;
+  height: 85vh;
+  max-height: 760px;
+  background-color: #000;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  user-select: none;
+  touch-action: pan-y; /* deja detectar bien el swipe horizontal */
+}
+
+/* contenedor de las barritas de arriba */
+.contenedor-barras-progreso {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  gap: 5px;
+  z-index: 20;
+}
+
+.barra-segmento {
+  flex: 1;
+  height: 3.5px;
+  background-color: rgba(255, 255, 255, 0.28);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.barra-relleno {
+  height: 100%;
+  width: 0%;
+  background-color: var(--color-primario);
+}
+
+/* cabecera dentro del visor */
+.cabecera-visor {
+  position: absolute;
+  top: 24px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 20;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.info-tiempo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.punto-vivo {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-primario);
+}
+
+.acciones-visor {
+  display: flex;
+  gap: 8px;
+}
+
+.boton-visor {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.boton-visor:hover {
+  background: rgba(16, 185, 129, 0.35);
+}
+
+/* imagen ajustada pa q no se deforme ni se corte feo */
+.imagen-historia-activa {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #05080a;
+}
+
+/* zonas invisibles pa dar clic izq o der */
+.zona-toque {
+  position: absolute;
+  top: 65px;
+  bottom: 0;
+  width: 35%;
+  z-index: 15;
+  cursor: pointer;
+}
+
+.zona-anterior {
+  left: 0;
+}
+
+.zona-siguiente {
+  right: 0;
+}
+
+/* ajustes pa pantallas muy pequeñitas */
+@media (max-width: 480px) {
+  body {
+    padding: 0;
+  }
+
+  .contenedor-aplicacion {
+    border-radius: 0;
+    min-height: 100vh;
+    border: none;
+  }
+
+  .marco-visor {
+    max-width: 100%;
+    height: 100vh;
+    max-height: none;
+    border-radius: 0;
+  }
+}

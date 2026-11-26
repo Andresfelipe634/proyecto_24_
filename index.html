@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Historias de 24 Horas</title>
+    <meta name="author" content="Andres Felipe Estepa">
+    <meta name="description" content=" Historias de 24 Horas">
+    <meta property="og:title" content=" Historias de 24 Horas  Andres Felipe Estepa">
+    <meta property="og:url" content="https://andresfelipe634.github.io/proyecto__24__/">
+    <link rel="icon" href="icono.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- contenedor principal pa centrar toda la app como si fuera un cel -->
+  <main class="contenedor-aplicacion">
+    
+    <!-- encabezado con el titulo y el selector pa probar rapido en clase -->
+    <header class="encabezado-superior">
+      <div class="titulo-grupo">
+        <h1>Momentos <span>24h</span></h1>
+        <p class="subtitulo-estado" id="texto-estado">Sin historias activas</p>
+      </div>
+
+      <!-- este switch es pa cambiar entre 24h reales o 15 seg pa mostrarle al profe -->
+      <div class="control-prueba" title="Cambia el tiempo pa probar q si se borran solas">
+        <label for="modo-prueba">Modo demo (15s)</label>
+        <input type="checkbox" id="modo-prueba">
+      </div>
+    </header>
+
+    <!-- barra horizontal donde salen las bolitas de las historias y el boton + -->
+    <section class="barra-historias" aria-label="Lista de historias">
+      
+      <!-- boton de agregar nueva historia -->
+      <button type="button" class="item-historia boton-agregar" id="boton-subir" aria-label="Subir nueva historia">
+        <div class="aro-historia aro-nuevo">
+          <span class="icono-mas">+</span>
+        </div>
+        <span class="etiqueta-historia">Tu historia</span>
+      </button>
+
+      <!-- input oculto pa abrir el explorador de archivos cuando le den al + -->
+      <input type="file" id="entrada-archivo" accept="image/*" hidden>
+
+      <!-- aca adentro js va a meter las historias q esten guardadas en localStorage -->
+      <div class="lista-historias-activas" id="contenedor-lista-historias"></div>
+    </section>
+
+    <!-- zona informativa abajo pa q la pantalla no se vea tan vacia -->
+    <section class="panel-informativo" id="panel-vacio">
+      <div class="tarjeta-guia">
+        <h2>¿Como funciona?</h2>
+        <ul>
+          <li>Toca el botón <strong>+</strong> para subir una foto desde tu dispositivo.</li>
+          <li>La imagen se redimensiona automáticamente a máximo <strong>1080×1920 px</strong>.</li>
+          <li>Cada historia dura <strong>3 segundos</strong> en pantalla y avanza sola.</li>
+          <li>Puedes <strong>deslizar (swipe)</strong> hacia los lados o tocar los bordes para cambiar.</li>
+          <li>Se eliminan solas al cumplir las <strong>24 horas</strong> (o 15s en modo demo).</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- visor en pantalla completa que se abre cuando uno toca una historia -->
+  <div class="visor-historia oculto" id="visor-modal" role="dialog" aria-modal="true">
+    <div class="marco-visor" id="area-deslizamiento">
+      
+      <!-- aca se crean las barritas de progreso de arriba, una por cada historia -->
+      <div class="contenedor-barras-progreso" id="barras-progreso"></div>
+
+      <!-- info de arriba del visor: hace cuanto se subio y boton de cerrar -->
+      <div class="cabecera-visor">
+        <div class="info-tiempo">
+          <span class="punto-vivo"></span>
+          <span id="tiempo-transcurrido">Hace un momento</span>
+        </div>
+        <div class="acciones-visor">
+          <button type="button" class="boton-visor" id="boton-eliminar-actual" title="Borrar esta historia">🗑️</button>
+          <button type="button" class="boton-visor" id="boton-cerrar-visor" title="Cerrar">✕</button>
+        </div>
+      </div>
+
+      <!-- imagen principal q se esta viendo -->
+      <img src="" alt="Contenido de la historia" class="imagen-historia-activa" id="imagen-visor">
+
+      <!-- zonas invisibles a izquierda y derecha pa pasar historia tocando (como en ig) -->
+      <div class="zona-toque zona-anterior" id="toque-izquierda"></div>
+      <div class="zona-toque zona-siguiente" id="toque-derecha"></div>
+
+    </div>
+  </div>
+
+  <!-- script con toda la logica de base64, localStorage, temporizadores y swipe -->
+  <script src="script.js"></script>
+</body>
+</html>
